@@ -34,6 +34,7 @@ public class FlashText extends Application{
                     while (true) {
                         if (lbText.getText().trim().length() == 0) {
                             text = "hello world!";
+                            lbText.setTextFill(Color.color(Math.random(), Math.random(), Math.random()));
                         } else {
                             text = "";
                         }
