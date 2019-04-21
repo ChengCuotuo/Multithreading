@@ -1,4 +1,4 @@
-package caranimation_not_multithreading;
+package com.nianzuochen.caranimation_30_2;
 
 import javafx.application.Application;
 import javafx.application.Platform;

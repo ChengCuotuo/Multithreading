@@ -1,4 +1,4 @@
-package caranimation_not_multithreading;
+package com.nianzuochen.caranimation_30_2;
 
 /**
  * Created by lei02 on 2019/4/19.
