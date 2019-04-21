@@ -17,14 +17,18 @@ public class DeadLock implements Runnable{
 
     @Override
     public void run() {
+        //标记为 0 标识先锁定对象 o1
         if (flag == 0) {
             synchronized (o1) {
+                //标识已经获取了资源 o1
                 System.out.println("flag=" + flag);
+                //让当前线程睡眠 500ms 等待另一个线程获取别的资源，扩大出现死锁的可能性
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
+                // 锁定资源 o2
                 synchronized (o2){
                     System.out.println("get o2");
                 }
