@@ -52,7 +52,7 @@ public class ParallelMergeSort {
     }
     // SortTask 实现并行编程
     public static class SortTask extends RecursiveAction {
-        // 分解的最小的排序单位
+        // 分解的最小的排序单位，threshold 阈值
         private final int THRESHOLD = 500;
         private int[] list;
 
@@ -63,6 +63,7 @@ public class ParallelMergeSort {
         @Override
         public void compute() {
             if (list.length < THRESHOLD) {
+                //System.out.println(list.length);
                 Arrays.sort(list);
             } else {
                 int[] firstHalf = new int[list.length / 2];
