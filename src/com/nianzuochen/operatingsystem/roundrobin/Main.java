@@ -39,23 +39,21 @@ public class Main {
     //进行时间片轮转算法
     public static void algorithm() {
         int time = 0;   //总时间
-        Task firstTask;
-        queue.offer(tasks.get(0));
-        tasks.get(0).subtractService();     //完成一次服务
+        Task firstTask = tasks.get(0);
+        queue.offer(firstTask);
+        firstTask.subtractService();     //完成一次服务
+        if (firstTask.getService() == 0) {
+            tasks.remove(firstTask);
+        }
         //非空表示还有任务没有完成
         while (!tasks.isEmpty() || !queue.isEmpty()) {
-            //队列可能为空，但是还有可能有的任务需要执行，所以要将时间推进
             if (!queue.isEmpty()) {
-                firstTask = queue.poll();       //获取并移出队首
-                //将执行的任务名称记录下来
-                order.append(firstTask.getName());
-
                 //为了公平，在时间片结束的时候先执行才此期间等待的任务，再将当前未执行完的任务执行
                 time++;
                 //添加最近一个时间片执行时候等待的任务
                 for (int i = 0; i < tasks.size(); i++) {
-                    if ((tasks.get(i).getArrive() <= time) && (tasks.get(i).getService() > 0) && (tasks.get(i) != firstTask)) {
-                        System.out.println(time + ", " + tasks.get(i).getArrive() + ", " + tasks.get(i).getName() + ", " + tasks.get(i).getService());
+                    if ((tasks.get(i).getArrive() <= time) &&
+                            (tasks.get(i).getService() > 0) && (!tasks.get(i).equals(firstTask))) {
                         queue.offer(tasks.get(i));
                         //错误修改，当将任务添加到队列之后，也就意味着这个任务会被执行，那么它的 service 要减一
                         //否则就会重复添加，所以减一操作在添加过程中
@@ -75,10 +73,11 @@ public class Main {
                     }
 
                 }
-            } else {
-                time++;
+                firstTask = queue.poll();       //获取并移出队首
+                //将执行的任务名称记录下来
+                order.append(firstTask.getName());
             }
-            System.out.println(order);
+
         }
     }
 }
